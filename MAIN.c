@@ -60,40 +60,18 @@ void SystemInit (void)
 
 int main (void)
 {	
-	uint32_t i, i2, i3 = 0;
-	uint8_t i4 = 0;
-	uint8_t X, Y;		
 	OLED_Init(0x78);			//__Инициализация OLED.
 	I2C2_Struct = &OLED;	//__Настройка I2C на работу с OLED.
 	
 	I2C_IntEvEn();				//__Разрешить прерывания I2C.
 	
-	
 	__enable_fiq();	//__Глобальное разрешение прерываний.
-			
-
 	
 	while(1)	
 	{	
 		OLED_SendSym(0, 0, &Barash, 0);
-
-		for(i2 = 0; i2 < 15; i2++)
-		{
-			while(d_I2C_WaitBusy);
-			if(i2)
-			{
-				X = (5 * (i2 - 1));
-				Y = (3 * (i3 - 1));
-			}
-			//OLED_ClearXY(X, Y, 24, 20);
-			X = (5 * i2);
-			Y = (3 * i3);			
-			//OLED_SendSym(X, Y, &Medusa, 0);
-			//OLED_SendSym((X + Medusa.Width), Y, &Medusa, 1);	
-			i3++;
-			d_I2C_Start();		//__Старт.	
-			for(i = 0; i < 399990; i++);		//__Тупо задержка времени.
-		}
+		while(d_I2C_WaitBusy);
+		d_I2C_Start();		//__Старт.	
 	}
 }
 
